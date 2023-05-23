@@ -7,21 +7,42 @@
 
 // Polyfill of Array.flat() method ⬇
 
-function myFalt() {
-    const output = []
+// Using FOR loop - 
+// function myFalt() {
+//     const output = []
 
+//     function getFlattenData(arr) {
+//         for (let i = 0; i < arr.length; i++) {
+//             const element = arr[i];
+//             if (Array.isArray(element)) {
+//                 getFlattenData(element)
+//             } else {
+//                 output.push(element)
+//             }
+//         }
+//     }
+//     getFlattenData(this);
+//     return output;
+// }
+
+
+
+
+
+// Using reduce method -
+function myFalt() {
     function getFlattenData(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            const element = arr[i];
-            if (Array.isArray(element)) {
-                getFlattenData(element)
+        const newArray = arr.reduce((acc, curr) => {
+            if (Array.isArray(curr)) {
+                acc = acc.concat(getFlattenData(curr))
             } else {
-                output.push(element)
+                acc = [...acc, curr]
             }
-        }
+            return acc;
+        }, [])
+        return newArray;
     }
-    getFlattenData(this);
-    return output;
+    return getFlattenData(this);
 }
 
 Array.prototype.myFalt = myFalt;
